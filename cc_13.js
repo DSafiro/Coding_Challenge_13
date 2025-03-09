@@ -30,6 +30,39 @@ function createEmployeeCard (name, position) {
         event.stopPropagation(); // Prevents employee container event from occuring when remove button is clicked
     }); // Part of Task 4
 
+    // Task 5: Inline Editing for Employee Cards
+    const editButton = document.createElement("button"); // Creates a new button for editing the card
+    editButton.textContent = "Edit"; // Adds edit text to button
+
+    editButton.addEventListener("click", (event) => { // When edit is clicked -> Name and position can be updated with inputted text when saved
+        editButton.style.display = "none"; // Hides edit button
+        
+        const employeeNameInput = document.createElement("input"); // Creates new input for name
+        employeeNameInput.value = employeeName.textContent; // Pre-populates input field with existing employee name
+        card.replaceChild(employeeNameInput, employeeName); // Replaces displayed name with input field
+        
+        const employeePositionInput = document.createElement("input"); // Creates new input for position
+        employeePositionInput.value = employeePosition.textContent; // Prepopulates input field with existing employee position
+        card.replaceChild(employeePositionInput, employeePosition); // Replaces displayed positon with input field
+        
+        const saveButton = document.createElement("button"); // Creates a save button to update inputted text
+        saveButton.textContent = "Save"; // Adds save text to button
+        
+        saveButton.addEventListener("click", (event) => { // When save button is clicked -> existing text is replaced with updated text inputs
+            employeeName.textContent = employeeNameInput.value; // Updates employee name to new one 
+            card.replaceChild(employeeName, employeeNameInput); // Replaces input field with updated static name text
+
+            employeePosition.textContent = employeePositionInput.value; // Updates employee position to new one
+            card.replaceChild(employeePosition, employeePositionInput); // Replaces input field with updated static position text
+            saveButton.remove(); // Removes save button when update is completed
+            editButton.style.removeProperty("display"); // Displays edit button again
+            event.stopPropagation(); // Prevents employee container event from occuring when save button is clicked
+        });
+        
+        card.appendChild(saveButton); // Appends save button to card
+        event.stopPropagation(); // Prevents employee container event form occuring hwen edit button is clicked
+    });
+    card.appendChild(editButton); // Appends edit button to card
 
 }; // Function to create employee card
 
