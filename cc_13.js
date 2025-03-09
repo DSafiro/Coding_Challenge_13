@@ -20,14 +20,23 @@ function createEmployeeCard (name, position) {
 
     employeeContainer.appendChild(card); // Appends card to employee container
 
-    removeButton.addEventListener("click", () => { // When remove button is click -> deletes card from container
-        card.remove()
-    }); 
+    // Task 4: Employee Card Removal with Event Bubbling    
+    employeeContainer.addEventListener("click", () => { // When employee card is clicked -> console logs that a card has been clicked
+        console.log("Employee card has been clicked.");
+    }); // Part of Task 4
+
+    removeButton.addEventListener("click", (event) => { // When remove button is clicked -> deletes card from container
+        employeeContainer.removeChild(card);
+        event.stopPropagation(); // Prevents employee container event from occuring when remove button is clicked
+    }); // Part of Task 4
+
+
 }; // Function to create employee card
 
 // Test Cases
 createEmployeeCard("Spongebob Squarepants", "Frycook");
 createEmployeeCard("Squidward Tentacles", "Cashier");
+createEmployeeCard("Eugene Krabs", "Manager");
 
 // Task 3: Bulk Update on Employee Cards
 function updateEmployeeCards () {
@@ -39,5 +48,5 @@ function updateEmployeeCards () {
         card.style.backgroundColor = "coral"; // Adds background color to card style
     }); // Updates each card's style
 }; // Function to update cards in bulk
-updateEmployeeCards() // Calls update employee cards function
+updateEmployeeCards(); // Calls update employee cards function
 
